@@ -10,13 +10,13 @@ import com.google.maps.android.clustering.ClusterItem;
 
 public class Person implements ClusterItem {
 
-    private String name;
-    private String surname;
     private final LatLng mPosition;
+    private String name;
+    private String twitterHandle;
 
-    public Person(double lat, double lng,String name, String surname) {
+    public Person(double lat, double lng, String name, String twitterHandle) {
         this.name = name;
-        this.surname = surname;
+        this.twitterHandle = twitterHandle;
         mPosition = new LatLng(lat, lng);
     }
 
@@ -40,6 +40,6 @@ public class Person implements ClusterItem {
 
     @Override
     public String getSnippet() {
-        return surname;
+        return twitterHandle;
     }
 }

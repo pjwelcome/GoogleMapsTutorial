@@ -19,46 +19,48 @@ import com.google.android.gms.maps.UiSettings;
 
 public abstract class BaseGoogleMapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupMap();
+        setContentView(getLayoutId());
+        createGoogleMap();
     }
 
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
-    private void setupMap() {
+    private void createGoogleMap() {
+        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
+    }
+
+    protected void setupMap(GoogleMap mMap) {
         if (mMap != null) {
             return;
         }
-        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
-        if (mMap != null) {
-            mMap.setBuildingsEnabled(true);
-            mMap.setIndoorEnabled(true);
-            mMap.setTrafficEnabled(true);
-            UiSettings mUiSettings = mMap.getUiSettings();
-            mUiSettings.setZoomControlsEnabled(true);
-            mUiSettings.setCompassEnabled(true);
-            mUiSettings.setMyLocationButtonEnabled(true);
-            mUiSettings.setScrollGesturesEnabled(true);
-            mUiSettings.setZoomGesturesEnabled(true);
-            mUiSettings.setTiltGesturesEnabled(true);
-            mUiSettings.setRotateGesturesEnabled(true);
-            // permissions
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
+
+        mMap.setBuildingsEnabled(true);
+        mMap.setIndoorEnabled(true);
+        mMap.setTrafficEnabled(true);
+        UiSettings mUiSettings = mMap.getUiSettings();
+        mUiSettings.setZoomControlsEnabled(true);
+        mUiSettings.setCompassEnabled(true);
+        mUiSettings.setMyLocationButtonEnabled(true);
+        mUiSettings.setScrollGesturesEnabled(true);
+        mUiSettings.setZoomGesturesEnabled(true);
+        mUiSettings.setTiltGesturesEnabled(true);
+        mUiSettings.setRotateGesturesEnabled(true);
+        // permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+        mMap.setMyLocationEnabled(true);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setupMap();
+        //createGoogleMap();
     }
 }
