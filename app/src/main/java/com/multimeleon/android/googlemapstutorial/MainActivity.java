@@ -27,7 +27,6 @@ public class MainActivity extends BaseGoogleMapsActivity {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-26.167616, 28.079329), 10));
 
         mClusterManager = new ClusterManager<>(this, googleMap);
-        mClusterManager.setRenderer(new RenderClusterInfoWindow(getApplicationContext(), googleMap, mClusterManager));
 
         googleMap.setOnCameraIdleListener(mClusterManager);
         googleMap.setOnMarkerClickListener(mClusterManager);
